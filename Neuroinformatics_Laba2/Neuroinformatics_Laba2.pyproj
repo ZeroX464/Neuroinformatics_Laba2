@@ -4,13 +4,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d767c699-15da-4eff-9f83-318f31ed49ad</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Neuroinformatics_Laba2.py</StartupFile>
+    <StartupFile>Test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Neuroinformatics_Laba2</Name>
     <RootNamespace>Neuroinformatics_Laba2</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +23,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Neuroinformatics_Laba2.py" />
+    <Compile Include="GenerateData.py" />
+    <Compile Include="Test.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="plant_dataset.xlsx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
