@@ -132,7 +132,7 @@ def generate_dataset(num_samples):
     return df
 
 # Генерация обучающей выборки размером 300
-dataset = generate_dataset(300)
+dataset = generate_dataset(30)
 
 # Сохранение в формате Excel (xlsx)
 with pd.ExcelWriter("plant_dataset.xlsx") as writer:
