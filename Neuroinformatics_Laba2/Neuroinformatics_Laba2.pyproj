@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d767c699-15da-4eff-9f83-318f31ed49ad</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>GenerateData.py</StartupFile>
+    <StartupFile>Test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

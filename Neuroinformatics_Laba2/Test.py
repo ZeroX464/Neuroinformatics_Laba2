@@ -56,12 +56,12 @@ X_train, X_test, y_train, y_test = load_data("C:\\TEST\\Laba1\\Neuroinformatics_
 
 # Параметры модели и обучения
 input_size = X_train.shape[1]
-hidden_sizes = [9]  # Количество нейронов в каждом скрытом слое
+hidden_sizes = [20]  # Количество нейронов в каждом скрытом слое
 output_size = len(set(y_train))
 activation = nn.ReLU()
-epochs = 100
+epochs = 1000
 lr = 0.001
-batch_size = 10
+batch_size = 5
 
 # Создание модели
 model = FlexibleMLP(input_size, hidden_sizes, output_size, activation)
