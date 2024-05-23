@@ -1,11 +1,11 @@
-import torch
+п»їimport torch
 import torch.nn as nn
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 
-# Загрузка данных из Excel файла
+# Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… РёР· Excel С„Р°Р№Р»Р°
 def load_data(file_path):
     df = pd.read_excel(file_path)
     X = df.iloc[:, :-1].values
@@ -18,7 +18,6 @@ def load_data(file_path):
     
     return X_train, X_test, y_train, y_test
 
-# Создание класса многослойного персептрона
 class FlexibleMLP(nn.Module):
     def __init__(self, input_size, hidden_sizes, output_size, activation):
         super(FlexibleMLP, self).__init__()
@@ -37,47 +36,41 @@ class FlexibleMLP(nn.Module):
         x = self.output_layer(x)
         return x
 
-# Функция обучения
 def train_model(model, criterion, optimizer, train_loader, epochs):
     for epoch in range(epochs):
         running_loss = 0.0
         for inputs, labels in train_loader:
             optimizer.zero_grad()
             outputs = model(inputs.float())
-            labels = labels.long()  # Приведение типа меток к Long
+            labels = labels.long()
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
         print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss}")
 
-# Загрузка данных
-X_train, X_test, y_train, y_test = load_data("C:\\TEST\\Laba1\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset.xlsx")
+X_train, X_test, y_train, y_test = load_data("C:\\Users\\user\\Source\\Repos\\ZeroX464\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset.xlsx")
 
-# Параметры модели и обучения
 input_size = X_train.shape[1]
-hidden_sizes = [20]  # Количество нейронов в каждом скрытом слое
+hidden_sizes = [20]
 output_size = len(set(y_train))
 activation = nn.ReLU()
 epochs = 1000
 lr = 0.001
 batch_size = 5
 
-# Создание модели
 model = FlexibleMLP(input_size, hidden_sizes, output_size, activation)
 
-# Критерий и оптимизатор
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 
-# Создание DataLoader
 train_dataset = TensorDataset(torch.tensor(X_train), torch.tensor(y_train))
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-# Обучение модели
+# РћР±СѓС‡РµРЅРёРµ РјРѕРґРµР»Рё
 train_model(model, criterion, optimizer, train_loader, epochs)
 
-# Оценка модели на тестовых данных
+# РћС†РµРЅРєР° РјРѕРґРµР»Рё РЅР° С‚РµСЃС‚РѕРІС‹С… РґР°РЅРЅС‹С…
 test_dataset = TensorDataset(torch.tensor(X_test), torch.tensor(y_test))
 test_loader = DataLoader(test_dataset, batch_size=batch_size)
 model.eval()
@@ -86,8 +79,11 @@ with torch.no_grad():
     total = 0
     for inputs, labels in test_loader:
         outputs = model(inputs.float())
+        #print(outputs)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
     accuracy = correct / total
     print(f"Test Accuracy: {accuracy}")
+    
+#torch.save(model.state_dict(), "MLP.pth")

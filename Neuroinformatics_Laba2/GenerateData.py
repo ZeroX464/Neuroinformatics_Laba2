@@ -1,9 +1,9 @@
-import numpy as np
+п»їimport numpy as np
 import pandas as pd
 
-# Генерация обучающей выборки
+# Р“РµРЅРµСЂР°С†РёСЏ РѕР±СѓС‡Р°СЋС‰РµР№ РІС‹Р±РѕСЂРєРё
 def generate_dataset(num_samples):
-    # Словарь для хранения пределов параметров для каждого класса растений
+    # РЎР»РѕРІР°СЂСЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РїСЂРµРґРµР»РѕРІ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ РєР»Р°СЃСЃР° СЂР°СЃС‚РµРЅРёР№
     parameters = {
         "Meadow Grasses": {
             "average_height": (20, 100),
@@ -94,29 +94,41 @@ def generate_dataset(num_samples):
             "sunlight_requirements": (4, 8),
             "soil_requirements": (3, 6),
             "blooming_season": (4, 9),
-        }
+        }    
     }
+    
+    """
+        "FantasticPlantClass2": {
+            "average_height": (1000, 2000),
+            "average_width": (500, 1000),
+            "growth_rate": (2, 4),
+            "watering_needs": (10, 14),
+            "sunlight_requirements": (24, 38),
+            "soil_requirements": (30, 60),
+            "blooming_season": (40, 90),
+        }
+        """
 
-    # Список для хранения данных об обучающей выборке
+    # РЎРїРёСЃРѕРє РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РѕР± РѕР±СѓС‡Р°СЋС‰РµР№ РІС‹Р±РѕСЂРєРµ
     data = []
 
-    # Генерация данных для каждого класса растений
+    # Р“РµРЅРµСЂР°С†РёСЏ РґР°РЅРЅС‹С… РґР»СЏ РєР°Р¶РґРѕРіРѕ РєР»Р°СЃСЃР° СЂР°СЃС‚РµРЅРёР№
     for plant_class, params in parameters.items():
-        # Определение континента происхождения для каждого класса
+        # РћРїСЂРµРґРµР»РµРЅРёРµ РєРѕРЅС‚РёРЅРµРЅС‚Р° РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕРіРѕ РєР»Р°СЃСЃР°
         if plant_class in ["Meadow Grasses", "Mountain Flowers", "Alpine Shrubs"]:
-            origin_mainland = 1  # Евразия
+            origin_mainland = 1  # Р•РІСЂР°Р·РёСЏ
         elif plant_class in ["Desert Plants", "Succulents"]:
-            origin_mainland = 2  # Африка
+            origin_mainland = 2  # РђС„СЂРёРєР°
         elif plant_class in ["Aquatic Plants"]:
-            origin_mainland = 3  # Южная Америка
+            origin_mainland = 3  # Р®Р¶РЅР°СЏ РђРјРµСЂРёРєР°
         elif plant_class in ["Tropical Palms"]:
-            origin_mainland = 6  # Азия
+            origin_mainland = 6  # Р®РіРѕ-Р·Р°РїР°РґРЅР°СЏ РђР·РёСЏ
         elif plant_class in ["Exotic Orchids", "Fruit Trees"]:
-            origin_mainland = 4  # Юго-Восточная Азия
+            origin_mainland = 4  # Р®РіРѕ-Р’РѕСЃС‚РѕС‡РЅР°СЏ РђР·РёСЏ
         elif plant_class in ["Flowering Shrubs"]:
-            origin_mainland = 5  # Северная Америка
+            origin_mainland = 5  # РЎРµРІРµСЂРЅР°СЏ РђРјРµСЂРёРєР°
         else:
-            origin_mainland = -1  # Континент происхождения неизвестен
+            origin_mainland = -1  # РљРѕРЅС‚РёРЅРµРЅС‚ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ РЅРµРёР·РІРµСЃС‚РµРЅ
         
         for _ in range(num_samples):
             sample = {
@@ -124,16 +136,16 @@ def generate_dataset(num_samples):
             }
             for param, (min_val, max_val) in params.items():
                 sample[param] = np.random.uniform(min_val, max_val)
-            sample["plant_class"] = plant_class  # Добавление столбца с названием класса растения
+            sample["plant_class"] = plant_class  # Р”РѕР±Р°РІР»РµРЅРёРµ СЃС‚РѕР»Р±С†Р° СЃ РЅР°Р·РІР°РЅРёРµРј РєР»Р°СЃСЃР° СЂР°СЃС‚РµРЅРёСЏ
             data.append(sample)
 
-    # Создание DataFrame из сгенерированных данных
+    # РЎРѕР·РґР°РЅРёРµ DataFrame РёР· СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹С… РґР°РЅРЅС‹С…
     df = pd.DataFrame(data)
     return df
 
-# Генерация обучающей выборки размером 300
-dataset = generate_dataset(30)
+# Р“РµРЅРµСЂР°С†РёСЏ РѕР±СѓС‡Р°СЋС‰РµР№ РІС‹Р±РѕСЂРєРё СЂР°Р·РјРµСЂРѕРј 300
+dataset = generate_dataset(1)
 
-# Сохранение в формате Excel (xlsx)
-with pd.ExcelWriter("plant_dataset.xlsx") as writer:
+# РЎРѕС…СЂР°РЅРµРЅРёРµ РІ С„РѕСЂРјР°С‚Рµ Excel (xlsx)
+with pd.ExcelWriter("plant_dataset_fantastic.xlsx") as writer:
     dataset.to_excel(writer, index=False)
