@@ -49,7 +49,7 @@ def train_model(model, criterion, optimizer, train_loader, epochs):
             running_loss += loss.item()
         print(f"Epoch {epoch+1}/{epochs}, Loss: {running_loss}")
 
-X_train, X_test, y_train, y_test = load_data("C:\\Users\\user\\Source\\Repos\\ZeroX464\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset.xlsx")
+X_train, X_test, y_train, y_test = load_data("C:\\TEST\\Laba1\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset.xlsx")
 
 input_size = X_train.shape[1]
 hidden_sizes = [20]
@@ -68,20 +68,35 @@ train_dataset = TensorDataset(torch.tensor(X_train), torch.tensor(y_train))
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 # Обучение модели
-train_model(model, criterion, optimizer, train_loader, epochs)
+#train_model(model, criterion, optimizer, train_loader, epochs)
+
+model2 = FlexibleMLP(8, hidden_sizes, 8, activation)
+model2.load_state_dict(torch.load("MLP.pth"))
+
+# 0 Водные
+# 1 Декоративные кустарники
+# 2 Луковичные цветы
+# 3 Плодовые
+# 4 Суккуленты
+# 5 Травянистые многолетники
+# 6 Тропические
+# 7 Хвойные деревья
 
 # Оценка модели на тестовых данных
-test_dataset = TensorDataset(torch.tensor(X_test), torch.tensor(y_test))
-test_loader = DataLoader(test_dataset, batch_size=batch_size)
-model.eval()
+test_dataset2 = TensorDataset(torch.tensor(X_test), torch.tensor(y_test))
+test_loader2 = DataLoader(test_dataset2, batch_size=batch_size, shuffle=True)
+model2.eval()
 with torch.no_grad():
     correct = 0
     total = 0
-    for inputs, labels in test_loader:
-        outputs = model(inputs.float())
-        #print(outputs)
+    for inputs, labels in test_loader2:
+        print(inputs)
+        outputs = model2(inputs.float())
+        print(outputs)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
+        print(predicted)
+        print(labels)
         correct += (predicted == labels).sum().item()
     accuracy = correct / total
     print(f"Test Accuracy: {accuracy}")

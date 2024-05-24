@@ -37,7 +37,7 @@ class FlexibleMLP(nn.Module):
         x = self.output_layer(x)
         return x
 
-X_test, y_test = load_data("C:\\Users\\user\\Source\\Repos\\ZeroX464\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset_fantastic.xlsx")
+X_test, y_test = load_data("C:\\TEST\\Laba1\\Neuroinformatics_Laba2\\Neuroinformatics_Laba2\\plant_dataset_fantastic.xlsx")
 
 input_size = X_test.shape[1]
 hidden_sizes = [20]
@@ -47,7 +47,7 @@ epochs = 100
 lr = 0.001
 batch_size = 5
 
-model = FlexibleMLP(8, hidden_sizes, 10, activation)
+model = FlexibleMLP(8, hidden_sizes, 8, activation)
 model.load_state_dict(torch.load("MLP.pth"))
 
 criterion = nn.CrossEntropyLoss()
@@ -57,14 +57,23 @@ test_dataset = TensorDataset(torch.tensor(X_test), torch.tensor(y_test))
 test_loader = DataLoader(test_dataset, batch_size=1)
 model.eval()
 
-classes = ["Meadow Grasses", "Desert Plants", "Aquatic Plants", "Tropical Palms", "Mountain Flowers", "Succulents", "Exotic Orchids", "Alpine Shrubs", "Fruit Trees", "Flowering Shrubs"]
+# 0 Водные растения
+# 1 Декоративные кустарники
+# 2 Луковичные цветы
+# 3 Плодовые деревья
+# 4 Суккуленты
+# 5 Травянистые многолетники
+# 6 Тропические растения
+# 7 Хвойные деревья
+
+classes = ["Водные растения", "Декоративные кустарники", "Луковичные цветы", "Плодовые деревья", "Суккуленты", "Травянистые многолетники", "Тропические растения", "Хвойные деревья"]
 
 with torch.no_grad():
         for inputs, labels in test_loader:
             outputs = model(inputs.float())
-            print(outputs)
+            #print(outputs)
             _, predicted = torch.max(outputs.data, 1)
-            print(predicted)
+            #print(predicted)
             for i in range(len(classes)):
                 if predicted[0] == i:
                     print(classes[i])
